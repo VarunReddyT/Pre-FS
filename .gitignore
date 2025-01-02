@@ -1,6 +1,6 @@
 *.class
 # *.pdf
-*.pptx
+# *.pptx
 *node_modules
 *.env
 PDFs
