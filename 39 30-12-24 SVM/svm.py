@@ -57,6 +57,18 @@ def generate_diabetes_data():
 def train_svm(X, y, learning_rate=0.01, epochs=1000, lambda_param=0.01):
     
     # your code here
+    n_samples, n_features = X.shape
+    weights = np.zeros(n_features)
+    bias = 0
+    
+    for epoch in range(epochs):
+        for idx, x_i in enumerate(X):
+            condition = y[idx] * (np.dot(x_i,weights)-bias) >= 1
+            if condition :
+                weights -= learning_rate * (2*lambda_param*weights)
+            else:
+                weights -= learning_rate * (2*lambda_param*weights-np.dot(x_i,y[idx]))
+                bias -= learning_rate*y[idx]
     
     return weights, bias
 
@@ -64,12 +76,15 @@ def train_svm(X, y, learning_rate=0.01, epochs=1000, lambda_param=0.01):
 def predict(X, weights, bias):
     
     # your code here
+    pred = np.sign(np.dot(X,weights)+bias)
     
     return pred
 
 def main():
     # Init dataset, labels and train the SVM
     # your code here
+    X,y = generate_diabetes_data()
+    weights, bias = train_svm(X.values,y.values)
 
     # Take new sample data from user for prediction
     print("Provide new data (Glucose, BMI, Age) below:")
