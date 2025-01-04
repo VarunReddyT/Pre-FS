@@ -57,7 +57,7 @@ def generate_diabetes_data():
 def train_svm(X, y, learning_rate=0.01, epochs=1000, lambda_param=0.01):
     
     # your code here
-    n_samples, n_features = X.shape
+    n_features = X.shape[1]
     weights = np.zeros(n_features)
     bias = 0
     
@@ -67,7 +67,7 @@ def train_svm(X, y, learning_rate=0.01, epochs=1000, lambda_param=0.01):
             if condition :
                 weights -= learning_rate * (2*lambda_param*weights)
             else:
-                weights -= learning_rate * (2*lambda_param*weights-np.dot(x_i,y[idx]))
+                weights -= learning_rate * (2*lambda_param*weights-np.dot(x_i,y[idx])) # Hinge loss gradient
                 bias -= learning_rate*y[idx]
     
     return weights, bias
