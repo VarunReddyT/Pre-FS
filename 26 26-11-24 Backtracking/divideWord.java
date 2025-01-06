@@ -57,15 +57,23 @@ public class divideWord {
     }
 
     public static int divWord(String s) {
-        int n = s.length();
         Set<String> set = new HashSet<>();
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                String sub = s.substring(i, j);
-                if (set.contains(sub)) break;
-                set.add(sub);
+        StringBuilder currentSubstring = new StringBuilder();
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            currentSubstring.append(c);
+            String substring = currentSubstring.toString();
+            if (set.contains(substring)) {
+                set.add(currentSubstring.toString());
+                count++;
+                currentSubstring = new StringBuilder();
+                currentSubstring.append(c);
             }
         }
-        return set.size();
+        if (currentSubstring.length() > 0) {
+            set.add(currentSubstring.toString());
+            count++;
+        }
+        return count;
     }
 }
